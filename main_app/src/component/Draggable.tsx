@@ -10,23 +10,47 @@ interface RobotProps {
 }
 
 type DraggableProps = {
-    children: React.ReactElement;
+    children: React.ReactElement[];
 }
 
 export default function Draggable( {children}:DraggableProps ){
 
-    const { name } = children.props;
+
+    const { name } = children[0].props;
+    
     const droppableZone = useRef<HTMLDivElement>(null);
 
     const [servi, setServi] = useState<RobotProps>({name: name, xPosition: 300, yPosition: 900 });
 
-    const giveDraggableAttr: React.FC<DraggableProps["children"]> = (raw:ReactElement) => {
+    const giveDraggableAttr: React.FC<DraggableProps["children"][0]> = (raw:ReactElement) => {
         return (
             <MovableRobot className='servi' draggable onDragStart={dragStart} onDrag={handleDrag} style={{ left: servi.xPosition, top: servi.yPosition }} >
                 {raw}
             </MovableRobot>
         );
     };
+
+    
+    // const droppableZone = useRef<HTMLDivElement>(null);
+    // let robotList : React.ReactElement[];
+
+
+    // for (let i = 0; i < childrens.length; i++){
+    //     const { name } = childrens[i].props;
+
+    //     const [servi, setServi] = useState<RobotProps>({name: name, xPosition: 300, yPosition: 900 });
+
+    //     const giveDraggableAttr: React.FC<DraggableProps["children"]> = (raw:ReactElement) => {
+    //         return (
+    //             <MovableRobot className='servi' draggable onDragStart={dragStart} onDrag={handleDrag} style={{ left: servi.xPosition, top: servi.yPosition }} >
+    //                 {raw}
+    //             </MovableRobot>
+    //         );
+    //     };
+        
+    // }
+
+
 
     const isInDroppableZone = (data:RobotProps) => {
         const {name, xPosition, yPosition} = data;
@@ -106,7 +130,7 @@ export default function Draggable( {children}:DraggableProps ){
             {/* <Box name={servi_1.name} xPosition={servi_1.xPosition} yPosition={servi_1.yPosition} ></Box>
             <Box name={servi_2.name} xPosition={servi_2.xPosition} yPosition={servi_2.yPosition} ></Box>
             <Box name={servi_3.name} xPosition={servi_3.xPosition} yPosition={servi_3.yPosition} ></Box> */}
-            {giveDraggableAttr(children)}
+            {giveDraggableAttr(children[0])}
         </BearRestaurantZone>
     );
 }
