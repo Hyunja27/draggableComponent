@@ -39,7 +39,7 @@ const handleDrag = (e:any) => {
 export default function Box({ name, xPos, yPos }:boxProps){
     return(
         <Robot id={name} draggable  onDragStart={dragStart} onDrag={handleDrag} style={{ left: xPos, top: yPos }}>
-            {name}
+            {"<" + name + ">"}
         </Robot>
     );
 }

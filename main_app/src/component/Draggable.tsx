@@ -11,19 +11,19 @@ interface boxProps {
 }
 
 const BearRestaurantZone = styled('div',{
-    height: '80vh',
-    width: '80vw',
+    height: '90vh',
+    width: '68vw',
     border: 'solid 3px black',
     borderRadius: '20px',
     backgroundColor: 'red',
-    background: 'url("/images/clusterMap.png")',
-    backgroundSize: "1200px",
+    background: 'url("/images/clusterMap2.png")',
+    backgroundSize: "1200px"
 });
 
 export default function Draggable(){
-    const [servi_1_pos, setServi_1_pos] = useState<boxProps>({name: 'servi1', xPos: 20, yPos:50});
-    const [servi_2_pos, setServi_2_pos] = useState<boxProps>({name: 'servi2', xPos: 20, yPos:600});
-    const [servi_3_pos, setServi_3_pos] = useState<boxProps>({name: 'servi3', xPos: 280, yPos:200});
+    const [servi_1_pos, setServi_1_pos] = useState<boxProps>({name: 'servi_1', xPos: 120, yPos:150});
+    const [servi_2_pos, setServi_2_pos] = useState<boxProps>({name: 'servi_2', xPos: 20, yPos:480});
+    const [servi_3_pos, setServi_3_pos] = useState<boxProps>({name: 'servi_3', xPos: 970, yPos:120});
 
     const droppableZone = useRef<HTMLInputElement>(null);
 
@@ -59,21 +59,21 @@ export default function Draggable(){
     const moveBoxCompo = (data:boxProps) => {
         const {name, xPos, yPos} = data
     
-        if (name === 'servi1'){
+        if (name === 'servi_1'){
             setServi_1_pos({
                 ...servi_1_pos,
                 xPos: xPos,
                 yPos: yPos
             })
         }
-        else if(name === 'servi2'){
+        else if(name === 'servi_2'){
             setServi_2_pos({
                 ...servi_2_pos,
                 xPos: xPos,
                 yPos: yPos
             })
         }
-        else if(name === 'servi3'){
+        else if(name === 'servi_3'){
             setServi_3_pos({
                 ...servi_3_pos,
                 xPos: xPos,
