@@ -1,7 +1,6 @@
 
-import Box from './Robot';
 import { styled } from '@stitches/react';
-import {useState, useRef, RefObject, ReactNode} from 'react';
+import {useState, useRef, ReactElement} from 'react';
 import { BOX_SIZE } from '../theme/size';
 
 interface RobotProps {
@@ -11,22 +10,22 @@ interface RobotProps {
 }
 
 type DraggableProps = {
-    children: React.ReactNode; 
+    children: React.ReactElement;
 }
 
 export default function Draggable( {children}:DraggableProps ){
 
+    const { name, xPosition, yPosition } = children.props;
     const droppableZone = useRef<HTMLDivElement>(null);
 
-    const [servi_1, setServi_1] = useState<RobotProps>({name: 'servi_1', xPosition: 120, yPosition:150 });
-    const [servi_2, setServi_2] = useState<RobotProps>({name: 'servi_2', xPosition: 20, yPosition:480 });
-    const [servi_3, setServi_3] = useState<RobotProps>({name: 'servi_3', xPosition: 970, yPosition:120 });
+    const [servi, setServi] = useState<RobotProps>({name: name, xPosition: xPosition, yPosition: yPosition });
+    // const [servi_2, setServi_2] = useState<RobotProps>({name: 'servi_2', xPosition: 20, yPosition:480 });
+    // const [servi_3, setServi_3] = useState<RobotProps>({name: 'servi_3', xPosition: 970, yPosition:120 });
 
-
-    const giveDraggableAttr = (children:DraggableProps) => {
+    const giveDraggableAttr: React.FC<DraggableProps["children"]> = (raw:ReactElement) => {
         return (
-            <div draggable  onDragStart={dragStart} onDrag={handleDrag}>
-                {children.children}
+            <div draggable onDragStart={dragStart} onDrag={handleDrag}>
+                {raw}
             </div>
         );
     };
@@ -85,11 +84,17 @@ export default function Draggable( {children}:DraggableProps ){
     };
     
     const handleDrag = (e:any) => {
-        console.log('X: ' + e.clientX + ' | Y: ' + e.clientY);
+        // console.log('X: ' + e.clientX + ' | Y: ' + e.clientY);
+        console.log(servi);
+        setServi({
+            ...servi,
+            xPosition: e.clientX,
+            yPosition: e.clientY
+        });
     };
     
     const detectDragEnd = (e:any) => {
-        console.log(e)
+        // console.log(e)
         const movedServi = {
             name: e.target.id,
             xPosition: e.clientX,
@@ -99,9 +104,9 @@ export default function Draggable( {children}:DraggableProps ){
         // if (isInDroppableZone(movedServi))
         //     moveBoxCompo(movedServi);
     };
-    
+
     return(
-        <BearRestaurantZone id='droppableZone' onDragEnd={detectDragEnd} ref={droppableZone}>
+        <BearRestaurantZone id='droppableZone' ref={droppableZone}>
             {/* <Box name={servi_1.name} xPosition={servi_1.xPosition} yPosition={servi_1.yPosition} ></Box>
             <Box name={servi_2.name} xPosition={servi_2.xPosition} yPosition={servi_2.yPosition} ></Box>
             <Box name={servi_3.name} xPosition={servi_3.xPosition} yPosition={servi_3.yPosition} ></Box> */}
