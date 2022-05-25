@@ -4,9 +4,9 @@ import { BOX_SIZE } from '../theme/size'
 
 interface RobotProps {
     name: string,
-    xPosition: number,
-    yPosition: number
-}
+    xPosition?: number,
+    yPosition?: number
+};
 
 export default function Robot({ name, xPosition, yPosition }:RobotProps){
 
@@ -15,7 +15,7 @@ export default function Robot({ name, xPosition, yPosition }:RobotProps){
             {"<" + name + ">"}
         </Servi>
     );
-}
+};
 
 const Servi = styled('div',{
     height: `${BOX_SIZE}px`,

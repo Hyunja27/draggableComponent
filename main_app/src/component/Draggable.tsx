@@ -15,18 +15,16 @@ type DraggableProps = {
 
 export default function Draggable( {children}:DraggableProps ){
 
-    const { name, xPosition, yPosition } = children.props;
+    const { name } = children.props;
     const droppableZone = useRef<HTMLDivElement>(null);
 
-    const [servi, setServi] = useState<RobotProps>({name: name, xPosition: xPosition, yPosition: yPosition });
-    // const [servi_2, setServi_2] = useState<RobotProps>({name: 'servi_2', xPosition: 20, yPosition:480 });
-    // const [servi_3, setServi_3] = useState<RobotProps>({name: 'servi_3', xPosition: 970, yPosition:120 });
+    const [servi, setServi] = useState<RobotProps>({name: name, xPosition: 300, yPosition: 900 });
 
     const giveDraggableAttr: React.FC<DraggableProps["children"]> = (raw:ReactElement) => {
         return (
-            <div draggable onDragStart={dragStart} onDrag={handleDrag}>
+            <MovableRobot className='servi' draggable onDragStart={dragStart} onDrag={handleDrag} style={{ left: servi.xPosition, top: servi.yPosition }} >
                 {raw}
-            </div>
+            </MovableRobot>
         );
     };
 
@@ -84,7 +82,6 @@ export default function Draggable( {children}:DraggableProps ){
     };
     
     const handleDrag = (e:any) => {
-        // console.log('X: ' + e.clientX + ' | Y: ' + e.clientY);
         console.log(servi);
         setServi({
             ...servi,
@@ -92,21 +89,20 @@ export default function Draggable( {children}:DraggableProps ){
             yPosition: e.clientY
         });
     };
-    
+
     const detectDragEnd = (e:any) => {
-        // console.log(e)
-        const movedServi = {
-            name: e.target.id,
+        setServi({
+            ...servi,
             xPosition: e.clientX,
-            yPosition: e.clientY,
-            ref: e
-        }
+            yPosition: e.clientY
+        });
         // if (isInDroppableZone(movedServi))
         //     moveBoxCompo(movedServi);
     };
 
+    
     return(
-        <BearRestaurantZone id='droppableZone' ref={droppableZone}>
+        <BearRestaurantZone id='droppableZone' onDragEnd={detectDragEnd} ref={droppableZone}>
             {/* <Box name={servi_1.name} xPosition={servi_1.xPosition} yPosition={servi_1.yPosition} ></Box>
             <Box name={servi_2.name} xPosition={servi_2.xPosition} yPosition={servi_2.yPosition} ></Box>
             <Box name={servi_3.name} xPosition={servi_3.xPosition} yPosition={servi_3.yPosition} ></Box> */}
@@ -124,6 +120,16 @@ const BearRestaurantZone = styled('div',{
     background: 'url("/images/clusterMap2.png")',
     backgroundSize: "1200px"
 });
+
+const MovableRobot = styled('div',{
+    height: `${BOX_SIZE}px`,
+    width: BOX_SIZE + 'px',
+    // border: 'solid 2px blue',
+    borderRadius: '10px',
+    position: 'absolute',
+    cursor: 'move',
+});
+
 
 {/* <Servi id={name} draggable  onDragStart={dragStart} onDrag={handleDrag} style={{ left: xPosition, top: yPosition }}>
 {"<" + name + ">"}
