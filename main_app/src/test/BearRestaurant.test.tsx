@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import BearRestaurant from '../BearRestaurant';
+import BearRestaurant from '../BearStudyCafe';
 
 test('renders Robot Name1 \'servi\' ', () => {
   render(<BearRestaurant />);

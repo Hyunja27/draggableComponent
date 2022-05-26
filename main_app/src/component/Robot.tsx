@@ -1,25 +1,36 @@
 
-import { styled } from '@stitches/react';
-import { BOX_SIZE } from '../theme/size'
+// This file name should be "box", but it has been changed to "Robot", 
+// according to the planning direction of the Draggable component.
 
+import { styled } from '@stitches/react';
+import { ROBOT_SIZE } from '../theme/size'
+
+// == type setting == 
 interface RobotProps {
     name: string,
     xPosition?: number,
     yPosition?: number
 };
 
-export default function Robot({ name, xPosition, yPosition }:RobotProps){
 
+
+// == main part == 
+
+export default function Robot({ name, xPosition, yPosition }:RobotProps){
     return(
         <Servi id={name} style={{ left: xPosition, top: yPosition }}>
-            {"<" + name + ">"}
+            {`<${name}>`}
         </Servi>
     );
 };
 
+
+
+// == styled component == 
+
 const Servi = styled('div',{
-    height: `${BOX_SIZE}px`,
-    width: BOX_SIZE + 'px',
+    height: `${ROBOT_SIZE}px`,
+    width: `${ROBOT_SIZE}px`,
     // border: 'solid 2px blue',
     borderRadius: '10px',
     background: 'url("/images/servi_pixeled.png")',
