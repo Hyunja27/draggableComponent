@@ -34,7 +34,7 @@ const Servi = styled('div',{
     // border: 'solid 2px blue',
     borderRadius: '10px',
     background: 'url("/images/servi_pixeled.png")',
-    backgroundSize: "60px",
+    backgroundSize: "70px",
     backgroundPosition: '0% 140%',
     backgroundRepeat: 'no-repeat',
     color: "orange",

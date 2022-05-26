@@ -17,8 +17,8 @@ export default function Draggable( props :any ){
   const droppableZone = useRef<HTMLDivElement>( null );
 
   const GiveDraggableAttr = ( singleElem :ReactElement, idx :number ) => {
-    const [xPosition, setXPos] = useState<Number>(100 + idx * 10);
-    const [yPosition, setYPos] = useState<Number>(100 + idx * 10);
+    const [xPosition, setXPos] = useState<Number>(100 + idx * 5);
+    const [yPosition, setYPos] = useState<Number>(450 + idx * 60);
 
     const isInDroppableZone = ( xPos:number, yPos:number ) => {
       const zoneBoundaryXmin = droppableZone.current?.getBoundingClientRect().left ? droppableZone?.current?.getBoundingClientRect().left : 0
@@ -110,7 +110,7 @@ const BearStudyCafeZone = styled('div',{
 
 const MovableRobot = styled('div',{
   height: `${ROBOT_SIZE}px`,
-  width: ROBOT_SIZE + 'px',
+  width:`${ROBOT_SIZE}px`,
   backgroundColor: "s",
   borderRadius: '10px',
   position: 'absolute',

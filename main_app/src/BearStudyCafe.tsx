@@ -7,13 +7,15 @@ import Box from './component/Robot';
 function BearStudyCafe() {
   return (
     <div className="App">
+        <Box name={"Recharging..."}/>
         <Draggable>
-          {/* <Box name={"I'm Draggable1"} /> */}
-          {/* <Box name={"I'm Draggable2"} /> */}
-          {/* <Box name={"I'm Draggable3"} /> */}
-          {/* <Box name={"I'm Not Draggable"} xPosition={700} yPosition={200}/> */}
+          <Box name={"Working_Servi"} />
+          <Box name={"CleanUp_Servi"} />
+          <Box name={"Carrying_Servi"} />
+          <Box name={"Bored_Servi"} />
         </Draggable>
-        <Box name={"I'm Not Draggable"} xPosition={1050} yPosition={150}/>
+        <Box name={"Sleeping..."}/>
+        {/* <Box name={"Sleeping..."} xPosition={1050} yPosition={190}/> */}
     </div>
   );
 }
