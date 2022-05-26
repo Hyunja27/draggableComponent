@@ -15,7 +15,6 @@ function BearStudyCafe() {
           <Box name={"Bored_Servi"} />
         </Draggable>
         <Box name={"Sleeping..."}/>
-        {/* <Box name={"Sleeping..."} xPosition={1050} yPosition={190}/> */}
     </div>
   );
 }
