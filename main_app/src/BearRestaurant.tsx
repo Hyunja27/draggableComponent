@@ -8,7 +8,7 @@ function BearRestaurant() {
     <div className="App">
         <Draggable>
           <Box name={"I'm Draggable1"}/>
-          {/* <Box name={"I'm Draggable2"} xPosition={700} yPosition={700}/> */}
+          {/* <Box name={"I'm Draggable2"} xPosition={200} yPosition={100}/> */}
           {/* <Box name={"I'm Not Draggable"} xPosition={700} yPosition={200}/> */}
         </Draggable>
         <Box name={"I'm Not Draggable"} xPosition={700} yPosition={200}/>
