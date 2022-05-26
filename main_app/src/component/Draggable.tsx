@@ -10,13 +10,11 @@ interface RobotProps {
 }
 
 export default function Draggable( props :any ){
-    // console.log(props["children"]);
-
     const droppableZone = useRef<HTMLDivElement>(null);
 
     const GiveDraggableAttr = (singleElem :ReactElement, idx :number) => {
-        const [xPosition, setXPos] = useState(30);
-        const [yPosition, setYPos] = useState(30);
+        const [xPosition, setXPos] = useState<Number>(30);
+        const [yPosition, setYPos] = useState<Number>(30);
 
         const dragStart = (e:any) => {
             console.log('Drag Event Start!');
@@ -26,14 +24,69 @@ export default function Draggable( props :any ){
             setXPos(e.clientX);
             setYPos(e.clientY);
         };
+
+        const isInDroppableZone = (xPos:number, yPos:number) => {
+
+            const boxSize = parseInt(BOX_SIZE) 
+    
+            const zoneBoundaryXmin = droppableZone.current?.getBoundingClientRect().left ? droppableZone?.current?.getBoundingClientRect().left : 0
+            const zoneBoundaryXmax = droppableZone.current?.getBoundingClientRect().right ? droppableZone?.current?.getBoundingClientRect().right : 0
+            const zoneBoundaryYmin = droppableZone.current?.getBoundingClientRect().top ? droppableZone?.current?.getBoundingClientRect().top : 0
+            const zoneBoundaryYmax = droppableZone.current?.getBoundingClientRect().bottom ? droppableZone?.current?.getBoundingClientRect().bottom : 0
+    
+            // if (xPos <= zoneBoundaryXmin){
+            //     setXPos(zoneBoundaryXmin);
+            //     setYPos(yPos);
+            // }else if(xPos + boxSize >= zoneBoundaryXmax){
+            //     setXPos(zoneBoundaryXmax - boxSize);
+            //     setYPos(yPos);
+            // }else if(yPos <= zoneBoundaryYmin){
+            //     setYPos(zoneBoundaryYmin);
+            //     setXPos(xPos);
+            // }else if(yPos + boxSize >= zoneBoundaryYmax){
+            //     setYPos(zoneBoundaryYmax - boxSize);
+            //     setXPos(xPos);
+            // }else{
+            //     setXPos(xPos);
+            //     setYPos(yPos);
+            // }
+            if (xPos <= zoneBoundaryXmin){
+                setXPos(zoneBoundaryXmin);
+                if(yPos <= zoneBoundaryYmin){
+                    setYPos(zoneBoundaryYmin);
+                }else if(yPos + boxSize >= zoneBoundaryYmax){
+                    setYPos(zoneBoundaryYmax - boxSize);
+                }else{
+                    setYPos(yPos);
+                }
+            }else if(xPos + boxSize >= zoneBoundaryXmax){
+                setXPos(zoneBoundaryXmax - boxSize);
+                if(yPos <= zoneBoundaryYmin){
+                    setYPos(zoneBoundaryYmin);
+                }else if(yPos + boxSize >= zoneBoundaryYmax){
+                    setYPos(zoneBoundaryYmax - boxSize);
+                }else{
+                    setYPos(yPos);
+                }
+            }else{
+                setXPos(xPos);
+                if(yPos <= zoneBoundaryYmin){
+                    setYPos(zoneBoundaryYmin);
+                    console.log("??");
+                }else if(yPos + boxSize >= zoneBoundaryYmax){
+                    setYPos(zoneBoundaryYmax - boxSize);
+                }else{
+                    setYPos(yPos);
+                }
+            }
+        };
         
         const handleDrag = (e:any) => {
             console.log(" xPos => ", e.clientX);
             console.log(" YPos => ", e.clientY);
             console.log(" ");
 
-            setXPos(e.clientX);
-            setYPos(e.clientY);
+            isInDroppableZone(e.clientX, e.clientY);
         };
 
         return (
@@ -42,31 +95,10 @@ export default function Draggable( props :any ){
             </MovableRobot>
         );
     };
-
-    const isInDroppableZone = (xPos:number, yPos:number) => {
-
-        const boxSize = parseInt(BOX_SIZE) 
-
-        const zoneBoundaryXmin = droppableZone.current?.getBoundingClientRect().left ? droppableZone?.current?.getBoundingClientRect().left : 0
-        const zoneBoundaryXmax = droppableZone.current?.getBoundingClientRect().right ? droppableZone?.current?.getBoundingClientRect().right : 0
-        const zoneBoundaryYmin = droppableZone.current?.getBoundingClientRect().top ? droppableZone?.current?.getBoundingClientRect().top : 0
-        const zoneBoundaryYmax = droppableZone.current?.getBoundingClientRect().bottom ? droppableZone?.current?.getBoundingClientRect().bottom : 0
-
-        if (xPos + boxSize <= zoneBoundaryXmin){
-            
-        }else if(xPos + boxSize >= zoneBoundaryXmax){
-
-        }else if(yPos + boxSize <= zoneBoundaryYmin){
-
-        }else if(yPos + boxSize >= zoneBoundaryYmax){
-
-        }
-    };
         
     const detectDragEnd = (e:any) => {
         console.log(" xPos_Done => ", e.clientX);
         console.log(" YPos_Done => ", e.clientY);
-        isInDroppableZone(e.clientX, e.clientY);
     };
 
     return(
@@ -85,6 +117,7 @@ export default function Draggable( props :any ){
 const BearRestaurantZone = styled('div',{
     height: '90vh',
     width: '68vw',
+    margin: "10%",
     border: 'solid 3px black',
     borderRadius: '20px',
     backgroundColor: 'red',
