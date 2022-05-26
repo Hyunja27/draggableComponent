@@ -4,10 +4,10 @@ import { useState, useRef, ReactElement } from 'react';
 import { ROBOT_SIZE, ZONE_HEIGHT, ZONE_WIDTH } from '../theme/size';
 
 //	== Simple Flow ==
-//	1. check the children presence (91 - 97)
-// 	2. if it has children, give Draggable attibute.(22 - 98)
-// 		-> give kind of dragAPIs. (62 - 81)
-// 		-> check the zone Size, and restrict moving. (26 - 60)
+//	1. check the children presence (89 - 93)
+// 	2. if it has children, give Draggable attibute.(23 - 85)
+// 		-> give kind of dragAPIs. (59 - 78)
+// 		-> check the zone Size, and restrict moving. (23 - 57)
 //	3. rendering BearStudyCafe, with movable Servi :)
 
 
