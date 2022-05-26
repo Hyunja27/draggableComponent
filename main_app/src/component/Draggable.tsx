@@ -55,6 +55,7 @@ export default function Draggable( childrens :any ){
     };
 
     if (childrens["children"]?.length && childrens["children"]?.length !== draggableInfo.length ) {
+        let tmpState : RobotProps[] = []
         for (let i = 0; i < childrens["children"].length; i++) {
             let { name, xPosition, yPosition} = childrens["children"][i].props;
 
@@ -64,6 +65,13 @@ export default function Draggable( childrens :any ){
             if ( yPosition === undefined) {
                 yPosition = 0;
             }
+
+            tmpState.concat({
+                    name: name,
+                    xPosition: xPosition,
+                    yPosition: yPosition
+            });
+    
             // setDraggableInfo(draggableInfo.concat({
             //     name: name,
             //     xPosition: xPosition,
@@ -71,9 +79,9 @@ export default function Draggable( childrens :any ){
             // }));
 
             // setDraggableElemList(draggableElemList.concat(giveDraggableAttr(childrens["children"][i])));
-
             draggableElemList.push(giveDraggableAttr(childrens["children"][i]));
         }
+        setDraggableInfo(tmpState);
     };
 
     const isInDroppableZone = (data:RobotProps) => {
@@ -120,6 +128,8 @@ export default function Draggable( childrens :any ){
     //         })
     //     }
     // };
+
+    console.log("->",draggableElemList);
 
     return(
         <BearRestaurantZone id='droppableZone' onDragEnd={detectDragEnd} ref={droppableZone}>
