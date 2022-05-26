@@ -1,6 +1,6 @@
 
 import { styled } from '@stitches/react';
-import { useState, useRef, useEffect, ReactElement } from 'react';
+import { useState, useRef, ReactElement, Children } from 'react';
 import { BOX_SIZE } from '../theme/size';
 
 interface RobotProps {
@@ -9,139 +9,76 @@ interface RobotProps {
     yPosition: number
 }
 
-export default function Draggable( childrens :any ){
+export default function Draggable( props :any ){
+    // console.log(props["children"]);
 
     const droppableZone = useRef<HTMLDivElement>(null);
-    let draggableElemList: ReactElement[] = [];
-    // const [draggableElemList, setDraggableElemList] = useState<ReactElement[]>([]);
-    const [draggableInfo, setDraggableInfo] = useState<RobotProps[]>([]);
 
-    const dragStart = (e:any) => {
-        console.log('Drag Event Start!');
-        // console.log(e);
-        // setDraggableInfo([e.clientX,e.clientY]);
-        const img = new Image();
-        e.dataTransfer.setDragImage(img, 0, 0);
-    };
-    
-    const handleDrag = (e:any) => {
-        // console.log("x->",e.clientX);
-        // console.log("y->",e.clientY,"\n");
+    const GiveDraggableAttr = (singleElem :ReactElement, idx :number) => {
+        const [xPosition, setXPos] = useState(30);
+        const [yPosition, setYPos] = useState(30);
 
-        e.target.style.left = e.clientX;
-        e.target.style.top = e.clientY;
-    };
+        const dragStart = (e:any) => {
+            console.log('Drag Event Start!');
+            const img = new Image();
+            e.dataTransfer.setDragImage(img, 0, 0);
 
-    const detectDragEnd = (e:any) => {
-        e.target.style.left = e.clientX;
-        e.target.style.top = e.clientY;
-    };
+            setXPos(e.clientX);
+            setYPos(e.clientY);
+        };
+        
+        const handleDrag = (e:any) => {
+            console.log(" xPos => ", e.clientX);
+            console.log(" YPos => ", e.clientY);
+            console.log(" ");
 
-    const giveDraggableAttr = (singleElem :ReactElement) => {
-        let {name, xPosition, yPosition} = singleElem.props;
+            setXPos(e.clientX);
+            setYPos(e.clientY);
+        };
 
-        if ( xPosition === undefined) {
-            xPosition = 0;
-        }
-        if ( yPosition === undefined) {
-            yPosition = 0;
-        }
-        // console.log("=>",singleElem);
         return (
-            <MovableRobot key={name} draggable onDragStart={dragStart} onDrag={handleDrag} style={{ left: xPosition, top: yPosition }} >
+            <MovableRobot key={`Robot_${idx}`} draggable onDragStart={dragStart} onDrag={handleDrag} style={{ left: `${xPosition}px`, top: `${yPosition}px` }} >
                 {singleElem}
             </MovableRobot>
         );
     };
 
-    if (childrens["children"]?.length && childrens["children"]?.length !== draggableInfo.length ) {
-        let tmpState : RobotProps[] = []
-        for (let i = 0; i < childrens["children"].length; i++) {
-            let { name, xPosition, yPosition} = childrens["children"][i].props;
+    const isInDroppableZone = (xPos:number, yPos:number) => {
 
-            if ( xPosition === undefined) {
-                xPosition = 0;
-            }
-            if ( yPosition === undefined) {
-                yPosition = 0;
-            }
-
-            tmpState.concat({
-                    name: name,
-                    xPosition: xPosition,
-                    yPosition: yPosition
-            });
-    
-            // setDraggableInfo(draggableInfo.concat({
-            //     name: name,
-            //     xPosition: xPosition,
-            //     yPosition: yPosition
-            // }));
-
-            // setDraggableElemList(draggableElemList.concat(giveDraggableAttr(childrens["children"][i])));
-            draggableElemList.push(giveDraggableAttr(childrens["children"][i]));
-        }
-        setDraggableInfo(tmpState);
-    };
-
-    const isInDroppableZone = (data:RobotProps) => {
-        const {name, xPosition, yPosition} = data;
         const boxSize = parseInt(BOX_SIZE) 
 
-        const zoneBoundaryXmin = droppableZone?.current?.getBoundingClientRect().left ? droppableZone?.current?.getBoundingClientRect().left : 0
-        const zoneBoundaryXmax = droppableZone?.current?.getBoundingClientRect().right ? droppableZone?.current?.getBoundingClientRect().right : 0
-        const zoneBoundaryYmin = droppableZone?.current?.getBoundingClientRect().top ? droppableZone?.current?.getBoundingClientRect().top : 0
-        const zoneBoundaryYmax = droppableZone?.current?.getBoundingClientRect().bottom ? droppableZone?.current?.getBoundingClientRect().bottom : 0
+        const zoneBoundaryXmin = droppableZone.current?.getBoundingClientRect().left ? droppableZone?.current?.getBoundingClientRect().left : 0
+        const zoneBoundaryXmax = droppableZone.current?.getBoundingClientRect().right ? droppableZone?.current?.getBoundingClientRect().right : 0
+        const zoneBoundaryYmin = droppableZone.current?.getBoundingClientRect().top ? droppableZone?.current?.getBoundingClientRect().top : 0
+        const zoneBoundaryYmax = droppableZone.current?.getBoundingClientRect().bottom ? droppableZone?.current?.getBoundingClientRect().bottom : 0
 
-        if (xPosition + boxSize <= zoneBoundaryXmin 
-            || xPosition + boxSize >= zoneBoundaryXmax 
-            || yPosition + boxSize <= zoneBoundaryYmin 
-            || yPosition + boxSize >= zoneBoundaryYmax){
-            console.log(`beeeep! ${name}' is moveOut!`);
-            return false;
+        if (xPos + boxSize <= zoneBoundaryXmin){
+            
+        }else if(xPos + boxSize >= zoneBoundaryXmax){
+
+        }else if(yPos + boxSize <= zoneBoundaryYmin){
+
+        }else if(yPos + boxSize >= zoneBoundaryYmax){
+
         }
-        return true;
-    }
-
-    // const moveBoxCompo = (data:RobotProps) => {
-    //     const {name, xPosition, yPosition} = data
-    
-    //     if (name === 'servi_1'){
-    //         setServi_1({
-    //             ...servi_1,
-    //             xPosition: xPosition,
-    //             yPosition: yPosition
-    //         })
-    //     }
-    //     else if(name === 'servi_2'){
-    //         setServi_2({
-    //             ...servi_2,
-    //             xPosition: xPosition,
-    //             yPosition: yPosition
-    //         })
-    //     }
-    //     else if(name === 'servi_3'){
-    //         setServi_3({
-    //             ...servi_3,
-    //             xPosition: xPosition,
-    //             yPosition: yPosition
-    //         })
-    //     }
-    // };
-
-    console.log("->",draggableElemList);
+    };
+        
+    const detectDragEnd = (e:any) => {
+        console.log(" xPos_Done => ", e.clientX);
+        console.log(" YPos_Done => ", e.clientY);
+        isInDroppableZone(e.clientX, e.clientY);
+    };
 
     return(
         <BearRestaurantZone id='droppableZone' onDragEnd={detectDragEnd} ref={droppableZone}>
-            { childrens["children"]?.length > 1 
-            ? draggableElemList
-            : childrens["children"]
-            ? giveDraggableAttr(childrens["children"])
+            { props["children"]?.length > 1 
+            ? props["children"].map((child : ReactElement, idx : number) => GiveDraggableAttr(child, idx))
+            : props["children"]
+            ? GiveDraggableAttr(props["children"], 0)
             : null}
         </BearRestaurantZone>
     );
 }
-
 
 // == styled component == 
 
