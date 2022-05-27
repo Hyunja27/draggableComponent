@@ -78,7 +78,7 @@ export default function Draggable( props :any ){
     };
 
     return (
-      <MovableRobot key={`Robot_${idx}`} draggable onDragStart={dragStart} onDrag={handleDrag} onDragEnd={detectDragEnd} style={{ left: `${xPosition}px`, top: `${yPosition}px` }} >
+      <MovableRobot data-testid="movablerobot" key={`Robot_${idx}`} draggable onDragStart={dragStart} onDrag={handleDrag} onDragEnd={detectDragEnd} style={{ left: `${xPosition}px`, top: `${yPosition}px` }} >
         {singleElem}
       </MovableRobot>
     );

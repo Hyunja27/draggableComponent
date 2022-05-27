@@ -1,20 +1,20 @@
 import React from 'react';
 import Draggable from './component/Draggable';
-import Box from './component/Robot';
+import Robot from './component/Robot';
 
 // == main part == 
 
 function BearStudyCafe() {
   return (
     <div className="App">
-        <Box name={"Recharging..."}/>
+        <Robot name={"Working_Servi"} />
         <Draggable>
-          <Box name={"Working_Servi"} />
-          <Box name={"CleanUp_Servi"} />
-          <Box name={"Carrying_Servi"} />
-          <Box name={"Bored_Servi"} />
+          <Robot name={"Recharging..."}/>
+          {/* <Robot name={"CleanUp_Servi"} />
+          <Robot name={"Carrying_Servi"} />
+          <Robot name={"Bored_Servi"} /> */}
         </Draggable>
-        <Box name={"Sleeping..."}/>
+        <Robot name={"Sleeping..."} />
     </div>
   );
 }
