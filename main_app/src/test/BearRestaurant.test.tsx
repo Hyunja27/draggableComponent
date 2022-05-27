@@ -81,15 +81,3 @@ test('[Draggable Test _ Robot]  \'Robot\' component in \'Draggable\' has Draggab
   const linkElement = screen.getByTestId("movablerobot")
   expect(linkElement.draggable).toBe(true)
 });
-
-test('[Draggable Test _ Robot]  \'Robot\' component in \'Draggable\' can Dragged by Drag Action ?', () => {
-  render(
-    <Draggable>
-      <Robot  name={"testName"} />
-    </Draggable>
-  );
-  const instance = screen.getByTestId("movablerobot").simulate()
-
-  instance.find('.resizer')
-});
-
