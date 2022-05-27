@@ -7,14 +7,14 @@ import Robot from './component/Robot';
 function BearStudyCafe() {
   return (
     <div className="App">
-        <Robot name={"Recharging..."}/>
-        <Draggable>
-          {/* <Robot name={"Working_Servi"} /> */}
-          <Robot name={"CleanUp_Servi"} />
-          {/* <Robot name={"Carrying_Servi"} /> */}
-          <Robot name={"Bored_Servi"} />
-        </Draggable>
         <Robot name={"Sleeping..."} />
+        <Draggable>
+          <Robot name={"Working_Servi"} />
+          <Robot name={"CleanUp_Servi"} />
+          <Robot name={"Carrying_Servi"} />
+          <Robot name={"Bored_Servi"} />
+          <div> Nice Music and Coffee Smell.. </div>
+        </Draggable>
     </div>
   );
 }

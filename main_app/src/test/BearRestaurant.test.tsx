@@ -1,6 +1,5 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import BearStudyCafe from '../BearStudyCafe';
 import Robot from '../component/Robot';
 import Draggable from '../component/Draggable';
 
@@ -76,6 +75,16 @@ test('[Draggable Test _ Robot]  \'Robot\' component in \'Draggable\' has Draggab
   render(
     <Draggable>
       <Robot  name={"testName"}/>
+    </Draggable>
+  );
+  const linkElement = screen.getByTestId("movablerobot")
+  expect(linkElement.draggable).toBe(true)
+});
+
+test('[Draggable Test _ Anything]  just \'div\' component in \'Draggable\' has Draggable ?', () => {
+  render(
+    <Draggable>
+      <div id={"Really? can I Dragged?"}></div>
     </Draggable>
   );
   const linkElement = screen.getByTestId("movablerobot")

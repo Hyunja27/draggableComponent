@@ -17,8 +17,8 @@ export default function Draggable( { children } : { children: ReactElement | Rea
   const droppableZone = useRef<HTMLDivElement>( null );
 
   const GiveDraggableAttr = ( singleElem :ReactElement, idx :number ) => {
-    const [xPosition, setXPos] = useState<Number>(80 + idx * 5);
-    const [yPosition, setYPos] = useState<Number>(420 + idx * 60);
+    const [xPosition, setXPos] = useState<Number>(160 + idx * 70);
+    const [yPosition, setYPos] = useState<Number>(440 + idx * 30);
     const [gap, setGap] = useState([0,0]);
 
     const isInDroppableZone = ( xPos:number, yPos:number ) => {
@@ -87,6 +87,7 @@ const BearStudyCafeZone = styled('div',{
   height: `${ZONE_HEIGHT}vh`,
   width: `${ZONE_WIDTH}vw`,
   margin: "5%",
+  marginLeft: "7%",
   border: 'solid 3px black',
   borderRadius: '20px',
   backgroundColor: 'red',
