@@ -19,7 +19,7 @@ export default function Draggable( {children} : {children: ReactElement | ReactE
   const GiveDraggableAttr = ( singleElem :ReactElement, idx :number ) => {
     const [xPosition, setXPos] = useState<Number>(100 + idx * 5);
     const [yPosition, setYPos] = useState<Number>(450 + idx * 60);
-    const [gap, setGap] = useState<Array<Number>>([0,0]);
+    const [gap, setGap] = useState([0,0]);
 
     const isInDroppableZone = ( xPos:number, yPos:number ) => {
       const zoneBoundaryXmin = droppableZone.current?.getBoundingClientRect().left ? droppableZone?.current?.getBoundingClientRect().left : 0
@@ -27,42 +27,26 @@ export default function Draggable( {children} : {children: ReactElement | ReactE
       const zoneBoundaryYmin = droppableZone.current?.getBoundingClientRect().top ? droppableZone?.current?.getBoundingClientRect().top : 0
       const zoneBoundaryYmax = droppableZone.current?.getBoundingClientRect().bottom ? droppableZone?.current?.getBoundingClientRect().bottom : 0
 
-      if ( xPos <= zoneBoundaryXmin ){
-        setXPos(zoneBoundaryXmin - Number(gap[0]));
-        if( yPos <= zoneBoundaryYmin ){
-          setYPos(zoneBoundaryYmin - Number(gap[1]));
-        }else if( yPos + ROBOT_SIZE >= zoneBoundaryYmax ){
-          setYPos(zoneBoundaryYmax - ROBOT_SIZE - Number(gap[1]));
-        }else{
-          setYPos(yPos - Number(gap[1]));
-        }
-      }else if( xPos + ROBOT_SIZE >= zoneBoundaryXmax ){
-        setXPos(zoneBoundaryXmax - ROBOT_SIZE - Number(gap[0]));
-        if( yPos <= zoneBoundaryYmin ){
-          setYPos(zoneBoundaryYmin - Number(gap[1]));
-        }else if( yPos + ROBOT_SIZE >= zoneBoundaryYmax ){
-          setYPos(zoneBoundaryYmax - ROBOT_SIZE - Number(gap[1]));
-        }else{
-          setYPos(yPos - Number(gap[1]));
-        }
+      if( yPos - gap[1] <= zoneBoundaryYmin){
+        setYPos(zoneBoundaryYmin);
+      }else if( yPos + ROBOT_SIZE - gap[1] >= zoneBoundaryYmax){
+        setYPos(zoneBoundaryYmax - ROBOT_SIZE);
       }else{
-        setXPos(xPos - Number(gap[0]));
-        if( yPos <= zoneBoundaryYmin ){
-          setYPos(zoneBoundaryYmin - Number(gap[1]));
-        }else if( yPos + ROBOT_SIZE >= zoneBoundaryYmax ){
-          setYPos(zoneBoundaryYmax - ROBOT_SIZE - Number(gap[1]));
-        }else{
-          setYPos(yPos - Number(gap[1]));
-        }
+        setYPos(yPos - gap[1]);
+      };
+
+      if( xPos - gap[0] <= zoneBoundaryXmin){
+        setXPos(zoneBoundaryXmin);
+      }else if( xPos + ROBOT_SIZE - gap[0] >= zoneBoundaryXmax){
+        setXPos(zoneBoundaryXmax - ROBOT_SIZE);
+      }else{
+        setXPos(xPos - gap[0]);
       };
     };
 
 		const dragStart = (e:any) => {
       const img = new Image();
       e.dataTransfer.setDragImage(img, 0, 0);
-      // const originx = 
-      console.log(" xPos_Done => ", e.clientX);
-      console.log(" YPos_Done => ", e.clientY);
       setGap([Number(e.clientX) - Number(xPosition), Number(e.clientY) - Number(yPosition)]);
     };
     
