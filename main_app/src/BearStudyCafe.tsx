@@ -7,12 +7,12 @@ import Robot from './component/Robot';
 function BearStudyCafe() {
   return (
     <div className="App">
-        <Robot name={"Working_Servi"} />
+        <Robot name={"Recharging..."}/>
         <Draggable>
-          <Robot name={"Recharging..."}/>
-          {/* <Robot name={"CleanUp_Servi"} />
+          <Robot name={"Working_Servi"} />
+          <Robot name={"CleanUp_Servi"} />
           <Robot name={"Carrying_Servi"} />
-          <Robot name={"Bored_Servi"} /> */}
+          <Robot name={"Bored_Servi"} />
         </Draggable>
         <Robot name={"Sleeping..."} />
     </div>
