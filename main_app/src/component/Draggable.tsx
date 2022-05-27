@@ -4,9 +4,9 @@ import { useState, useRef, ReactElement } from 'react';
 import { ROBOT_SIZE, ZONE_HEIGHT, ZONE_WIDTH } from '../theme/size';
 
 //	== Simple Flow ==
-//	1. check the children presence (75 - 79)
-// 	2. if it has children, give Draggable attibute.(19 - 70)
-// 		-> give kinds of dragAPI. (47 - 63)
+//	1. check the children presence (74 - 78)
+// 	2. if it has children, give Draggable attibute.(19 - 69)
+// 		-> give kinds of dragAPI. (47 - 62)
 // 		-> check the zone Size, and restrict moving. (24 - 45)
 //	3. rendering BearStudyCafe, with movable Servi :)
 
@@ -62,14 +62,24 @@ export default function Draggable( { children } : { children: ReactElement | Rea
     };
 
     return (
-      <MovableRobot data-testid="movablerobot" key={`Robot_${idx}`} draggable onDragStart={handleDragStart} onDrag={handleDraging} onDragEnd={handleDragEnd} style={{ left: `${xPosition}px`, top: `${yPosition}px` }} >
+      <MovableRobot 
+        data-testid="movablerobot" 
+        key={`Robot_${idx}`} 
+        draggable 
+        onDragStart={handleDragStart} 
+        onDrag={handleDraging} 
+        onDragEnd={handleDragEnd} 
+        style={{ left: `${xPosition}px`, top: `${yPosition}px` }} >
         {singleElem}
       </MovableRobot>
     );
   };
 
   return(
-    <BearStudyCafeZone data-testid="draggablezone" id='droppableZone' ref={droppableZone}>
+    <BearStudyCafeZone 
+      data-testid="draggablezone" 
+      id='droppableZone' 
+      ref={droppableZone}>
       {
         children 
         ? Array.isArray(children)
